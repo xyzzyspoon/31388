@@ -63,11 +63,72 @@ void getChessboardCorners(vector<Mat> images, vector<vector<Point2f>>& allFoundC
 	}
 }
 
+void reorientRobot(vector<double> markerPose, Vec3d translationVectors, Vec3d rotationVectors, vector<double> * robotPose)
+{
+	Mat rotation;
+	Mat cameraRotation;
+	Mat cameraRotationVectors;
+	Mat translationVectorsMat(3,1,DataType<double>::type);
+	Mat cameraTranslationVectors(3, 1, DataType<double>::type);
+	//vector<double> robotPose = {0,0,0,0,0,0};
+
+	Rodrigues(rotationVectors, rotation); // Calculates markerPose rotation matrix.
+	cameraRotation = rotation.t();  // Calculates Camera rotation matrix.
+
+	Rodrigues(rotation, cameraRotationVectors); // Calculates Camera Rotation Vectors.
+	
+
+	translationVectorsMat.at<double>(0, 0) = translationVectors[0];
+	
+	translationVectorsMat.at<double>(1, 0) = translationVectors[1];
+	
+
+	translationVectorsMat.at<double>(2, 0) = translationVectors[2];
+	
+	cameraTranslationVectors = -rotation.t() * translationVectorsMat; // Calculates Camera Translation Vector
+	*robotPose = { cameraTranslationVectors.at<double>(0, 0) + markerPose[0],  cameraTranslationVectors.at<double>(1,0) + markerPose[1],  cameraTranslationVectors.at<double>(2,0), cameraRotationVectors.at<double>(0, 0), cameraRotationVectors.at<double>(1,0), cameraRotationVectors.at<double>(2,0)};
+	return;
+}
+
+
+void localizeRobot(Vec3d translationVectors, Vec3d rotationVectors, int markerIds, vector<double> * robotPose)
+{
+	//vector<double> robotPose = {0,0,0,0,0,0};
+	vector<double> markerPose = {0,0,0,0,0,0};
+	switch (markerIds)
+	{
+	case 1:
+		markerPose = {3,3.5,0,0,0,0};
+		reorientRobot(markerPose, translationVectors, rotationVectors, robotPose);
+		break;
+	case 2:
+		markerPose = {5,7.6,0,0,0,0};
+		reorientRobot(markerPose, translationVectors, rotationVectors, robotPose);
+		break;
+	case 3:
+		markerPose = {7.6,3.6,0,0,0,0};
+		reorientRobot(markerPose, translationVectors, rotationVectors, robotPose);
+		break;
+	case 4:
+		markerPose = {0,0,0,0,0,0};
+		reorientRobot(markerPose, translationVectors, rotationVectors, robotPose);
+		break;
+	case 5:
+		markerPose = {5.1,9.2,0,0,0,0};
+		reorientRobot(markerPose, translationVectors, rotationVectors, robotPose);
+		break;
+	default:
+		break;
+	}
+	return;
+}
+
 int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficients, float arucoSquareDimensions)
 {
 	Mat frame; //Webcam feed.
 	vector<int> markerIds; //ArUco markers.
 	vector<vector<Point2f>> markerCorners, rejectedCandidates; //x,y positions of found square intersections on image.
+	vector<double> robotPose = { 0,0,0,0,0,0 };
 
 	aruco::DetectorParameters parameters; //
 
@@ -78,7 +139,6 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 	{
 		return -1;
 	}
-
 	namedWindow("Webcam", CV_WINDOW_AUTOSIZE);
 	vector<Vec3d> rotationVectors, translationVectors; //3D image translations to 2D.
 
@@ -90,11 +150,17 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 		aruco::detectMarkers(frame, markerDictionary, markerCorners, markerIds); //Finds markers in camera feed and relates them to an ID in our library.
 		aruco::estimatePoseSingleMarkers(markerCorners, arucoSquareDimension, cameraMatrix, distanceCoefficients, rotationVectors, translationVectors); //Having seen marker, function attempt to determine 3D pose of our marker.
 
-		for (int i = 0; i < markerIds.size(); i++) //Draws a 3D axis over top of each ArUco marker in the frame.
+		for (int i = 0; i < markerIds.size(); i++) //Draws a 3D axis over top of each ArUco marker in the frame, and localizes robot in world frame.
 		{
 			aruco::drawAxis(frame, cameraMatrix, distanceCoefficients, rotationVectors[i], translationVectors[i], 0.1f);
-			cout << translationVectors[i] << rotationVectors[i] << "\n"<< endl;
-
+			//cout << translationVectors[i] << rotationVectors[i] << markerIds[i] << "\n"<< endl;
+			localizeRobot(translationVectors[i], rotationVectors[i], markerIds[i], &robotPose); //STILL REQUIRES A VARIABLE TO WRITE ANSWER TO!!!!
+			cout << "Robot Pose Relative to Camera: \n" ;
+			for (int i = 0; i < robotPose.size(); i++)
+			{
+				 cout << robotPose[i] << "\t";
+			}
+			cout << endl;
 		}
 		imshow("Webcam", frame);
 		if (waitKey(30) >= 0) //Prevents infinite errors that may occur.
@@ -262,6 +328,8 @@ void cameraCalibrationProcess(Mat& cameraMatrix, Mat& distanceCoefficients) //Go
 	}
 	return;
 }
+
+
 
 int main(int argv, char** argc)
 {
