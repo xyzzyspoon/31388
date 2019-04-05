@@ -1,0 +1,10 @@
+thread=1
+    vel=0.0, edgel=0.0, white=0, irsensor=1: time=2.0
+    event=30: time=2.0
+thread=100, event=30: event=31
+    vel=0.25, edgel=0, white=1: lv<2
+    event=31: time=0.2
+thread=101, event=31: event=30
+    vel=0.25,tr=0.0: time=10.0, turn=90
+  vel=0.25: time=10.0, lv>5    
+event=30: time=0.2
