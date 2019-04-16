@@ -1,0 +1,22 @@
+﻿  colour_recognition.cpp
+c:\users\boser\documents\courses\second_semester\building_dependable_robot_systems\colour_recognition\colour_recognition\colour_recognition.cpp(246): warning C4244: 'argument': conversion from 'double' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+c:\users\boser\documents\courses\second_semester\building_dependable_robot_systems\colour_recognition\colour_recognition\colour_recognition.cpp(249): warning C4244: 'argument': conversion from 'double' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+c:\users\boser\documents\courses\second_semester\building_dependable_robot_systems\colour_recognition\colour_recognition\colour_recognition.cpp(421): warning C4244: 'argument': conversion from 'double' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+c:\users\boser\documents\courses\second_semester\building_dependable_robot_systems\colour_recognition\colour_recognition\colour_recognition.cpp(424): warning C4244: 'argument': conversion from 'double' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+  colour_recognition.vcxproj -> C:\Users\boser\Documents\Courses\Second_Semester\Building_Dependable_Robot_Systems\colour_recognition\x64\Debug\colour_recognition.exe
