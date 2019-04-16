@@ -1,0 +1,12 @@
+﻿  detect_balls.cpp
+c:\users\boser\documents\courses\second_semester\building_dependable_robot_systems\detect_balls\detect_balls\detect_balls.cpp(238): warning C4244: 'argument': conversion from 'double' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+c:\users\boser\documents\courses\second_semester\building_dependable_robot_systems\detect_balls\detect_balls\detect_balls.cpp(241): warning C4244: 'argument': conversion from 'double' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+  detect_balls.vcxproj -> C:\Users\boser\Documents\Courses\Second_Semester\Building_Dependable_Robot_Systems\detect_balls\x64\Debug\detect_balls.exe
