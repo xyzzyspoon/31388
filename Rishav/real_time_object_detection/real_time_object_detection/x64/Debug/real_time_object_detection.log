@@ -1,0 +1,2 @@
+﻿  real_time_object_detection.cpp
+c:\users\boser\documents\courses\second_semester\building_dependable_robot_systems\real_time_object_detection\real_time_object_detection\real_time_object_detection.cpp(3): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory
