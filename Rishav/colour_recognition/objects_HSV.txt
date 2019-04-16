@@ -1,0 +1,9 @@
+Orange: H-35; S-25; V-105
+Green: H-50; S-12; V-90
+
+Orange: H-85; S-115; V-55
+Green: H-20; S-45; V-150
+
+
+Orange: H-85; S-98; V-38
+Green: H-40; S-65; V-35

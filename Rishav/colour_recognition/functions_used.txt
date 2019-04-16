@@ -1,0 +1,164 @@
+1. read()
+
+Video capture class
+Grabs, decodes and returns the next video frame
+
+2. cvtColor()
+
+Converts an image from one color space to another
+
+Argument 1 - Input image
+Argument 2 - Output image
+Argument 3 - Conversion type
+
+3. imshow()
+
+To display an image in the specified window
+
+Argument 1 - Name of the window where we want to display the image
+Argument 2 - Image that we want to display
+
+	
+4. inRange()
+
+Used to threshold an image
+
+Argument 1 - Input image
+Argument 2 - Minimum intensity values
+Argument 3 - Maximum intensity values
+Argument 4 - Output image
+
+5. getStructuringElement()
+
+Generates a structuring element to perform Erosion and Dilation operations on our image
+
+Argument 1 - int shape -> Element shape that could be one of the following:
+			MORPH_RECT - a rectangular structuring element (0)
+			MORPH_CROSS a cross-shaped structuring element (1)
+			MORPH_ELLIPSE - an elliptic structuring element (2)
+			CV_SHAPE_CUSTOM - custom structuring element
+Argument 2 - Size ksize –> Size of the structuring element.
+Argument 3 - Point anchor = Point(-1,-1)
+			Anchor position within the element. The default value(-1, -1) means that the anchor is at the center.
+			Note that only the shape of a cross - shaped element depends on the anchor position.
+			In other cases the anchor just regulates how much the result of the morphological operation is shifted.
+	
+6. erode()
+
+Erodes an image by using a specific structuring element
+
+7. dilate()
+
+Dilates an image by using a specific structuring element
+
+The arguments for both erode() and dilate() are the same
+
+Argument 1 - src -> Input image
+Argument 2 - dst -> Output image
+Argument 3 - element –> structuring element used for erosion
+Argument 4 - anchor –> position of the anchor within the element
+		       default value(-1, -1) means that the anchor is at the element center
+Argument 5 - iterations –> number of times erosion is applied
+Argument 6 - borderType –> pixel extrapolation method (see borderInterpolate() for details).
+Argument 7 - borderValue – border value in case of a constant border (see createMorphologyFilter() for details)
+	
+8. findContours()
+
+Used to find object boundaries of a thresholded image
+
+Argument 1 - Input image
+Argument 2 - Output -> detected contours – Each contour is stored as a vector of points.
+Argument 3 - hierarchy –> Optional output vector, containing information about the image topology.It has as many elements as the number of contours
+Argument 4 - Contour retrieval mode:
+	CV_RETR_EXTERNAL retrieves only the extreme outer contours.It sets hierarchy[i][2] = hierarchy[i][3] = -1 for all the contours.
+	CV_RETR_LIST retrieves all of the contours without establishing any hierarchical relationships.
+	CV_RETR_CCOMP retrieves all of the contours and organizes them into a two - level hierarchy.
+		At the top level, there are external boundaries of the components.
+		At the second level, there are boundaries of the holes.
+		If there is another contour inside a hole of a connected component, it is still put at the top level.
+	CV_RETR_TREE retrieves all of the contours and reconstructs a full hierarchy of nested contours.
+Argument 5 - method –
+	CV_CHAIN_APPROX_NONE stores absolutely all the contour points
+	CV_CHAIN_APPROX_SIMPLE compresses horizontal, vertical, and diagonal segments and leaves only their end points
+	CV_CHAIN_APPROX_TC89_L1, CV_CHAIN_APPROX_TC89_KCOS applies one of the flavors of the Teh - Chin chain approximation algorithm.
+	offset – Optional offset by which every contour point is shifted.This is useful if the contours are extracted from the image ROI and then they should be analyzed in the whole image context.
+	
+9. boundingRect()
+
+Calculates the points of the bounding rectangle of a point set
+
+Input argument -> image contours
+
+10. rectangle()
+
+Draws a rectangle around an object
+
+Argument 1: img – Image
+Argument 2: pt1 – Vertex of the rectangle
+Argument 3: pt2 – Vertex of the rectangle opposite to pt1 
+Argument 4: color – Rectangle color 
+Argument 5: thickness – Thickness of lines that make up the rectangle
+Argument 6: lineType – Type of the line
+			8 - 8-connected line
+			4 - 4-connected line
+Argument 7: shift – Number of fractional bits in the point coordinates.
+	
+11. putText()
+
+Draws a text string
+
+Argument 1: img – Image
+Argument 2: text – Text string to be drawn.
+Argument 3: org – Bottom - left corner of the text string in the image.
+Argument 4: font – CvFont structure initialized using InitFont().
+Argument 5: fontFace – Font type
+	   	FONT_HERSHEY_SIMPLEX
+		FONT_HERSHEY_PLAIN
+		FONT_HERSHEY_DUPLEX
+		FONT_HERSHEY_COMPLEX
+		FONT_HERSHEY_TRIPLEX
+		FONT_HERSHEY_COMPLEX_SMALL
+		FONT_HERSHEY_SCRIPT_SIMPLEX
+		FONT_HERSHEY_SCRIPT_COMPLEX
+Argument 6: fontScale – Font scale factor that is multiplied by the font - specific base size
+Argument 7: color – Text color.
+Argument 8: thickness – Thickness of the lines used to draw a text
+Argument 9: lineType – Line type
+			8 - 8-connected line
+			4 - 4-connected line
+Argument 10: bottomLeftOrigin – When true, the image data origin is at the bottom - left corner.Otherwise, it is at the top - left corner
+
+12. circle()
+
+Draws a circle
+
+Argument 1: img – Image where the circle is drawn
+Argument 2: center – Center of the circle.
+Argument 3: radius – Radius of the circle.
+Argument 4: color – Circle color.
+Argument 5: thickness – Thickness of the circle outline, if positive.
+			Negative thickness means that a filled circle is to be drawn.
+Argument 6: lineType – Type of the circle boundary.
+			8 - 8-connected line
+			4 - 4-connected line
+Argument 7: shift – Number of fractional bits in the coordinates of the center and in the radius value	
+
+13. line()
+
+Argument 1: img – Image where the line is to be drawn
+Argument 2: pt1 – First point of the line segment
+Argument 3: pt2 – Second point of the line segment
+Argument 4: color – Line color
+Argument 5: thickness – Line thickness.
+Argument 6: lineType – Type of the line boundary.See the line() description.
+			8 - 8-connected line
+			4 - 4-connected line
+Argument 7: shift – Number of fractional bits in the coordinates of the center and in the radius value
+
+14. moments()
+
+Calculates all of the moments up to the third order of a polygon or rasterized shape
+
+Input argument: Contours
+https://docs.opencv.org/2.4/modules/imgproc/doc/structural_analysis_and_shape_descriptors.html?highlight=moments#moments
+https://stackoverflow.com/questions/22470902/understanding-moments-function-in-opencv
